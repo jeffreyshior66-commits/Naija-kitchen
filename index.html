@@ -120,5 +120,53 @@ footer{background:#102d21;color:white;text-align:center;padding:25px;font-size:1
     status.textContent = "Naija Kitchen connected! " + data.length + " recipes found.";
   }
 </script>
+
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+  const db = createClient(
+    "https://swkwvxgtdyjxqlxggcfn.supabase.co",
+    "sb_publishable_-LUWMKTbSvN4U_UcABcTUQ_bXccxQ8j"
+  );
+
+  const { data, error } = await db.rpc("get_recipe_previews");
+
+  const section = document.createElement("section");
+  section.style.cssText = "padding:30px 20px;background:#fffaf0;";
+
+  const heading = document.createElement("h2");
+  heading.textContent = "Recipes from Naija Kitchen";
+  section.appendChild(heading);
+
+  if (error) {
+    const message = document.createElement("p");
+    message.textContent = "Recipes could not be loaded. Please try again.";
+    section.appendChild(message);
+  } else {
+    data.forEach(recipe => {
+      const card = document.createElement("div");
+      card.style.cssText = "padding:18px;margin:15px 0;background:white;border-radius:12px;box-shadow:0 2px 8px #ddd;";
+
+      const title = document.createElement("h3");
+      title.textContent = recipe.title;
+
+      const description = document.createElement("p");
+      description.textContent = recipe.description || recipe.category;
+
+      const price = document.createElement("strong");
+      price.textContent = "₦" + recipe.price_naira;
+
+      card.append(title, description, price);
+      section.appendChild(card);
+    });
+  }
+
+  const firstRecipe = document.querySelector(".recipe");
+  if (firstRecipe && firstRecipe.parentElement) {
+    firstRecipe.parentElement.insertAdjacentElement("afterend", section);
+  } else {
+    document.body.appendChild(section);
+  }
+</script>
 </body>
 </html>
