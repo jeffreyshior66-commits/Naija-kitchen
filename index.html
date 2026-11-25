@@ -271,5 +271,44 @@ footer{background:#102d21;color:white;text-align:center;padding:25px;font-size:1
     updateAccountStatus();
   });
 </script>
+
+<section id="my-kitchen" style="display:none;max-width:650px;margin:35px auto;padding:25px;background:#fffaf0;border-radius:16px;font-family:Arial,sans-serif;">
+  <h2 style="color:#174d35;">🍲 My Kitchen</h2>
+  <p>Welcome to your personal cooking space!</p>
+
+  <div style="background:#e8f0e9;padding:18px;border-radius:12px;margin:20px 0;">
+    <h3>My Account</h3>
+    <p id="kitchen-email"></p>
+    <p style="color:#174d35;">Account status: Active</p>
+  </div>
+
+  <h3>My Purchased Recipes</h3>
+  <div style="background:white;padding:18px;border-radius:12px;">
+    <p>Your purchased recipes will appear here.</p>
+    <p>Start exploring delicious Nigerian recipes!</p>
+  </div>
+
+  <h3 style="margin-top:25px;">My Favourites</h3>
+  <div style="background:white;padding:18px;border-radius:12px;">
+    <p>Your saved recipes will appear here.</p>
+  </div>
+</section>
+
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+  const db = createClient(
+    "https://swkwvxgtdyjxqlxggcfn.supabase.co",
+    "sb_publishable_-LUWMKTbSvN4U_UcABcTUQ_bXccxQ8j"
+  );
+
+  const { data } = await db.auth.getSession();
+
+  if (data.session) {
+    document.getElementById("my-kitchen").style.display = "block";
+    document.getElementById("kitchen-email").textContent =
+      data.session.user.email;
+  }
+</script>
 </body>
 </html>
