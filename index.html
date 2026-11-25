@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naija Kitchen | Discover. Learn. Cook. Share.</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#fffaf0;color:#26352b;line-height:1.6}
+header{background:#123d2b;color:white;padding:20px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.logo{font-size:23px;font-weight:800;color:#ffbd59}
+nav a{color:white;text-decoration:none;margin-left:15px;font-size:14px}
+.hero{padding:65px 7%;background:#e9f0e5;text-align:center}
+.hero h1{font-size:clamp(34px,7vw,58px);line-height:1.15;color:#17432f;margin-bottom:15px}
+.hero p{max-width:550px;margin:0 auto 24px;color:#526255}
+.btn{display:inline-block;background:#ed8b32;color:white;padding:13px 23px;border-radius:8px;text-decoration:none;font-weight:bold}
+section{padding:45px 6%}
+h2{color:#17432f;margin-bottom:20px;font-size:27px}
+.categories,.recipes{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:15px}
+.category,.recipe{background:white;border:1px solid #e9e4d9;border-radius:13px;padding:20px;text-align:center}
+.category span{font-size:30px;display:block;margin-bottom:8px}
+.recipe .food{font-size:48px;background:#f5eee0;border-radius:10px;padding:20px;margin-bottom:12px}
+.recipe h3{font-size:18px;margin-bottom:5px}
+.price{color:#16804b;font-weight:bold;margin:10px}
+.recipe a{display:block;color:#17432f;text-decoration:none;font-weight:bold}
+.about{background:#17432f;color:white;text-align:center}
+.about h2{color:#ffbd59}
+footer{background:#102d21;color:white;text-align:center;padding:25px;font-size:13px}
+@media(max-width:520px){header{justify-content:center}nav{width:100%;text-align:center}nav a{margin:0 7px}.hero{padding:50px 6%}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">🍲 Naija Kitchen</div>
+<nav>
+<a href="#home">Home</a>
+<a href="#categories">Categories</a>
+<a href="#recipes">Recipes</a>
+<a href="#about">About</a>
+</nav>
+</header>
+
+<main>
+<div class="hero" id="home">
+<h1>Discover. Learn. Cook. Share.</h1>
+<p>Your home for delicious Nigerian, African and international meals. Learn new recipes, explore cooking videos and bring amazing food to your table.</p>
+<a class="btn" href="#recipes">Explore Recipes</a>
+</div>
+
+<section id="categories">
+<h2>Explore Categories</h2>
+<div class="categories">
+<div class="category"><span>🍚</span>Meals</div>
+<div class="category"><span>🥤</span>Drinks</div>
+<div class="category"><span>🍰</span>Desserts</div>
+<div class="category"><span>🧁</span>Baking</div>
+<div class="category"><span>🎥</span>Cooking Videos</div>
+</div>
+</section>
+
+<section id="recipes">
+<h2>Discover Something Delicious</h2>
+<div class="recipes">
+<div class="recipe">
+<div class="food">🍛</div>
+<h3>Nigerian Jollof Rice</h3>
+<p>A delicious West African favourite.</p>
+<div class="price">₦300</div>
+<a href="#about">Explore Recipe →</a>
+</div>
+<div class="recipe">
+<div class="food">🍗</div>
+<h3>Grilled Chicken</h3>
+<p>Juicy, flavourful and satisfying.</p>
+<div class="price">₦300</div>
+<a href="#about">Explore Recipe →</a>
+</div>
+<div class="recipe">
+<div class="food">🥞</div>
+<h3>Homemade Pancakes</h3>
+<p>A lovely breakfast favourite.</p>
+<div class="price">₦300</div>
+<a href="#about">Explore Recipe →</a>
+</div>
+</div>
+</section>
+
+<section class="about" id="about">
+<h2>More Than Just Recipes</h2>
+<p>Learn new cooking skills, discover exciting meals, share your creations and connect with food lovers.</p>
+<br>
+<a class="btn" href="#home">Back to Top</a>
+</section>
+</main>
+
+<footer>
+<p>© 2026 Naija Kitchen. Discover. Learn. Cook. Share.</p>
+<p>Made with ❤️ for food lovers.</p>
+</footer>
+</body>
+</html>
