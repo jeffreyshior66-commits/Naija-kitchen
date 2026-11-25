@@ -98,5 +98,27 @@ footer{background:#102d21;color:white;text-align:center;padding:25px;font-size:1
 <p>© 2026 Naija Kitchen. Discover. Learn. Cook. Share.</p>
 <p>Made with ❤️ for food lovers.</p>
 </footer>
+
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+  const supabase = createClient(
+    "https://swkwvxgtdyjxqlxggcfn.supabase.co",
+    "sb_publishable_-LUWMKTbSvN4U_UcABcTUQ_bXccxQ8j"
+  );
+
+  const status = document.createElement("div");
+  status.textContent = "Connecting to Naija Kitchen...";
+  status.style.cssText = "position:fixed;bottom:10px;left:10px;right:10px;padding:14px;background:#174d35;color:white;text-align:center;border-radius:10px;z-index:9999;";
+  document.body.appendChild(status);
+
+  const { data, error } = await supabase.rpc("get_recipe_previews");
+
+  if (error) {
+    status.textContent = "Connection issue: " + error.message;
+  } else {
+    status.textContent = "Naija Kitchen connected! " + data.length + " recipes found.";
+  }
+</script>
 </body>
 </html>
