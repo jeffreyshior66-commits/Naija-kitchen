@@ -168,5 +168,108 @@ footer{background:#102d21;color:white;text-align:center;padding:25px;font-size:1
     document.body.appendChild(section);
   }
 </script>
+
+<section id="customer-account" style="max-width:500px;margin:35px auto;padding:25px;background:#fffaf0;border-radius:15px;font-family:Arial,sans-serif;">
+  <h2 style="color:#174d35;">Your Naija Kitchen Account</h2>
+  <p>Create an account or sign in to access your kitchen.</p>
+
+  <form id="register-form">
+    <h3>Create Account</h3>
+    <input id="register-email" type="email" placeholder="Your email address" required style="width:100%;padding:12px;margin:8px 0;">
+    <input id="register-password" type="password" placeholder="Create a password (at least 6 characters)" minlength="6" required style="width:100%;padding:12px;margin:8px 0;">
+    <button type="submit" style="background:#174d35;color:white;padding:12px 20px;border:0;border-radius:8px;">Register</button>
+  </form>
+
+  <hr style="margin:25px 0;">
+
+  <form id="login-form">
+    <h3>Sign In</h3>
+    <input id="login-email" type="email" placeholder="Your email address" required style="width:100%;padding:12px;margin:8px 0;">
+    <input id="login-password" type="password" placeholder="Your password" required style="width:100%;padding:12px;margin:8px 0;">
+    <button type="submit" style="background:#174d35;color:white;padding:12px 20px;border:0;border-radius:8px;">Sign In</button>
+  </form>
+
+  <button id="logout-button" type="button" style="display:none;margin-top:15px;padding:10px;">Sign Out</button>
+  <p id="account-message" role="status" style="margin-top:15px;"></p>
+</section>
+
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+  const supabase = createClient(
+    "https://swkwvxgtdyjxqlxggcfn.supabase.co",
+    "sb_publishable_-LUWMKTbSvN4U_UcABcTUQ_bXccxQ8j"
+  );
+
+  const message = document.getElementById("account-message");
+  const registerForm = document.getElementById("register-form");
+  const loginForm = document.getElementById("login-form");
+  const logoutButton = document.getElementById("logout-button");
+
+  registerForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    message.textContent = "Creating your account...";
+
+    const email = document.getElementById("register-email").value.trim();
+    const password = document.getElementById("register-password").value;
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: window.location.origin + window.location.pathname
+      }
+    });
+
+    if (error) {
+      message.textContent = error.message;
+    } else if (data.session) {
+      message.textContent = "Welcome to Naija Kitchen! Your account is ready.";
+    } else {
+      message.textContent = "Registration received! Check your email to confirm your account.";
+    }
+  });
+
+  loginForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    message.textContent = "Signing you in...";
+
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value;
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    message.textContent = error
+      ? error.message
+      : "You're signed in to Naija Kitchen!";
+  });
+
+  logoutButton.addEventListener("click", async () => {
+    const { error } = await supabase.auth.signOut();
+    message.textContent = error ? error.message : "You have signed out.";
+  });
+
+  async function updateAccountStatus() {
+    const { data } = await supabase.auth.getSession();
+    const signedIn = !!data.session;
+
+    registerForm.style.display = signedIn ? "none" : "block";
+    loginForm.style.display = signedIn ? "none" : "block";
+    logoutButton.style.display = signedIn ? "block" : "none";
+
+    if (signedIn) {
+      message.textContent = "Welcome, " + data.session.user.email + "!";
+    }
+  }
+
+  await updateAccountStatus();
+
+  supabase.auth.onAuthStateChange(() => {
+    updateAccountStatus();
+  });
+</script>
 </body>
 </html>
