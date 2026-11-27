@@ -157,6 +157,37 @@ footer{background:#102d21;color:white;text-align:center;padding:25px;font-size:1
       price.textContent = "₦" + recipe.price_naira;
 
       card.append(title, description, price);
+     const buyButton = document.createElement("button");
+buyButton.textContent = `Buy Recipe – ₦${recipe.price_naira}`;
+
+buyButton.addEventListener("click", async () => {
+  buyButton.disabled = true;
+  buyButton.textContent = "Processing...";
+
+  try {
+    const { data, error } = await db.functions.invoke(
+      "initialize-payment",
+      {
+        body: { content_id: recipe.id }
+      }
+    );
+
+    if (error) throw error;
+    if (!data?.authorization_url) {
+      throw new Error("Payment link not received");
+    }
+
+    window.location.href = data.authorization_url;
+
+  } catch (error) {
+    alert(error.message);
+    buyButton.disabled = false;
+    buyButton.textContent =
+      `Buy Recipe – ₦${recipe.price_naira}`;
+  }
+});
+
+card.appendChild(buyButton); 
       section.appendChild(card);
     });
   }
